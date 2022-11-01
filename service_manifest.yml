@@ -1,0 +1,42 @@
+name: ACCE
+version: $SERVICE_TAG
+description: This service submits files to ACCE and provides the results.
+
+accepts: .*
+rejects: empty|metadata/.*
+
+stage: CORE
+category: Static Analysis
+
+file_required: true
+timeout: 300
+disable_cache: true
+
+enabled: true
+is_external: true
+
+submission_params:
+  - default: ""
+    name: api_key
+    type: str
+    value: ""
+  - default: false
+    name: mwcp_legacy
+    type: bool
+    value: false
+  - default: true
+    name: get_artifacts
+    type: bool
+    value: true
+
+config:
+  base_url: "https://research.acce.ciphertechsolutions.com"
+  apikey: "YOU_KEY_HERE"
+  max_poll_attempts: 15
+  poll_delay: 20
+
+docker_config:
+  image: ${REGISTRY}/assemblyline-service-acce:$SERVICE_TAG
+  cpu_cores: 0.25
+  ram_mb: 128
+  allow_internet_access: true
